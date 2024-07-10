@@ -176,7 +176,7 @@ impl<'a> Iterator for Tokenizer<'a> {
                     kind,
                     span: self.lexer.span(),
                 })),
-                Err(_) => Some(Err(Error::Lex)),
+                Err(_) => Some(Err(Error::LexError)),
             },
             None => None,
         }
@@ -186,6 +186,7 @@ impl<'a> Iterator for Tokenizer<'a> {
 #[derive(Logos, Debug, PartialEq, Eq, Clone, Copy)]
 pub enum TokenKind {
     // Skip
+
     #[regex(r"[ \t\r\n\f]+", logos::skip)]
     Whitespace,
 
@@ -193,10 +194,17 @@ pub enum TokenKind {
     Comment,
 
     // Identifier
+
     #[regex(r#"[_a-zA-Z][_a-zA-Z0-9]*"#)]
     Identifier,
+    
+    // Event defs
 
-    // Keywords
+    #[token("event", ignore(ascii_case))]
+    Event,
+
+    // Built-in actions
+
     #[token("sched", ignore(ascii_case))]
     Sched,
 
@@ -212,8 +220,7 @@ pub enum TokenKind {
     #[token("stop", ignore(ascii_case))]
     Stop,
 
-    #[token("event", ignore(ascii_case))]
-    Event,
+    // Kernel configs
 
     #[token("kernel", ignore(ascii_case))]
     Kernel,
@@ -224,8 +231,15 @@ pub enum TokenKind {
     #[token("scheduler", ignore(ascii_case))]
     Scheduler,
 
+    // Scheduler types
+
     #[token("fifo", ignore(ascii_case))]
     Fifo,
+
+    #[token("random", ignore(ascii_case))]
+    Random,
+
+    // Other markers
 
     #[token("{")]
     LBrace,

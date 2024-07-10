@@ -15,7 +15,7 @@ pub fn parse_kml(input: Tokens) -> Result<Model, Error> {
     let result = model(input).finish();
     match result {
         Ok((_, model)) => Ok(model),
-        Err(_) => Err(Error::Syntax),
+        Err(_) => Err(Error::SyntaxError),
     }
 }
 
@@ -104,6 +104,7 @@ fn scheduler_type(input: Tokens) -> IResult<SchedulerType> {
     let token = &token.tok[0];
     match token.kind {
         TokenKind::Fifo => Ok((input, SchedulerType::Fifo)),
+        TokenKind::Random => Ok((input, SchedulerType::Random)),
         _ => Err(Err::Error(NomError::new(input, ErrorKind::Tag))),
     }
 }

@@ -25,4 +25,5 @@ eventAction   : 'shutdown'
 schedulerDef  : 'scheduler' '=' schedulerType ;
 eventsDef     : 'events' '=' '[' (IDENTIFIER (',' IDENTIFIER)*)? ']' ;
 
-schedulerType : 'fifo' ;
+schedulerType : 'fifo' 
+              | 'random';

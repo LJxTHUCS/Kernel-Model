@@ -1,8 +1,9 @@
 #[derive(Debug)]
 pub enum Error {
-    Lex,
-    Syntax,
+    LexError,
+    SyntaxError,
+    BadKernelConfig,
     TaskNotFound,
-    ApiNotFound,
+    EventNotFound,
     NoReadyTask,
 }

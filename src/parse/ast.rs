@@ -13,7 +13,7 @@ pub struct EventDef {
     pub body: Vec<EventAction>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum EventAction {
     Shutdown,
     NewTask,
@@ -33,9 +33,10 @@ pub enum KernelConfig {
     Scheduler(SchedulerType),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum SchedulerType {
     Fifo,
+    Random,
 }
 
 impl From<TokenKind> for EventAction {
@@ -51,7 +52,7 @@ impl From<TokenKind> for EventAction {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Identifier(pub String);
 
 impl From<Identifier> for String {

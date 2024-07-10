@@ -1,4 +1,4 @@
-event finish {
+event shut {
     shutdown
 }
 
@@ -21,8 +21,8 @@ event timer {
     sched
 }
 
-# A Simple fifo kernel
+# A Simple random kernel
 kernel {
-    scheduler = fifo
-    events = [timer, spawn, finish, exception, end]
+    scheduler = random
+    events = [timer, spawn, shut, exception, end]
 }
