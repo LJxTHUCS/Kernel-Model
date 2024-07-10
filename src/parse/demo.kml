@@ -1,0 +1,28 @@
+event finish {
+    shutdown
+}
+
+event spawn {
+    newtask
+}
+
+event end {
+    exit
+    sched
+}
+
+event exception {
+    exit
+    sched
+}
+
+event timer {
+    stop
+    sched
+}
+
+# A Simple fifo kernel
+kernel {
+    scheduler = fifo
+    events = [timer, spawn, finish, exception, end]
+}
