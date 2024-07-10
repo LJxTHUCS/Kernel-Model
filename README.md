@@ -52,9 +52,9 @@ A normal test routine can be designed as
 
 1. Describe Abstract Model. Design a customized kernel description language. Portable components.
 
-2. Kernel Input and Output. The target kernel runs on an emulator (e.g. QEMU) normally. How to manage input and output of the kernel?
+   >KML (Kernel Model Language), grammar defined in `kml.g4`, example in `demo.kml`.
 
-   >[QEMU monitor](https://qemu-project.gitlab.io/qemu/system/monitor.html) ?
+2. Kernel Input and Output. The target kernel runs on an emulator (e.g. QEMU) normally. How to manage input and output of the kernel?
 
 3. How to define observable traits and abstract states? How to track states and traits in the kernel which runs on an emulator?
 
