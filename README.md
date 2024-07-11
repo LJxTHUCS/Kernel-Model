@@ -5,7 +5,7 @@
 A kernel model is a combination of abstract state and methods.
 
 $$
-M = (O,S) =((Events,Sheduler),(TaskBlocks,CurrentTask,\cdots))
+M = (O,S) =((Events,Scheduler),(TaskBlocks,CurrentTask,\cdots))
 $$
 
 The only way to update a kernel model is calling a Event
@@ -16,7 +16,7 @@ $$
 
 The resulting $\Pi(M, event)$ is a set that contains all possible model states after calling $event$.
 
-For an abstract function $f$, a real kernel $K$ with state $S_k$, and a kernel model $M$ with state $S_M$, we say $S_M$ matches  $S_K$ if
+For an abstract function $f$, a real kernel $K$ with state $S_k$, and a kernel model $M$ with state $S_M$, we say $S_M$ matches $S_K$ if
 
 $$
 S_M = f(S_K)
@@ -28,18 +28,18 @@ $$
 A = [event_1, event_2, \cdots]
 $$
 
-Define function $\Phi$ that extracts all observable traits of a kernel (or a kernel model). OS correctness can be marked as
+OS correctness can be marked as
 
 $$
 \begin{aligned}
 K \sim M \iff & \forall A = [event_1,event_2,\cdots],\ S_{M,0} = f(S_{K,0}) \rightarrow  \\
-&\Phi(K.call(event_1)) \subseteq \Phi(\Pi(M,event_1)) \\
-&\wedge \Phi(K.call(event_1).call(event_2)) \subseteq \Phi(\Pi(\Pi(K,event_1),event_2)) \\
+&f(S_{K.call(event_1)}) \in S_{\Pi(M,event_1)} \\
+&\wedge f(S_{K.call(event_1).call(event_2)}) \in S_{\Pi(\Pi(K,event_1),event_2))} \\
 &\wedge \cdots \\
 \end{aligned}
 $$
 
-For each event sequence, after each execution step, the observable traits of the real kernel must be a subset of the kernel model. 
+For each event sequence, after each execution step, the abstract state of the real kernel must be an element of all possible states of the kernel model. 
 
 ## Test Routine
 
@@ -54,13 +54,13 @@ $$
 2. Execute an event on both kernel and model, check if satisfies
 
 $$
-\Phi(K.call(event)) \subseteq \Phi(\Pi(M,event))
+f(S_{K.call(event)}) \in S_{\Pi(M,event)}
 $$
 
 3. If yes, update model state as
 
 $$
-S_M' = f(S_K')
+S_M' \leftarrow f(S_K')
 $$
 
 4. Loop until a violation occurs.

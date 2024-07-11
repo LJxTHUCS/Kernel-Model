@@ -5,13 +5,13 @@ mod parse;
 mod scheduler;
 mod state;
 
-use std::{fs::OpenOptions, io::Write};
-
 use clap::Parser;
+use error::Error;
 use event::*;
 use kernel::*;
 use parse::*;
 use scheduler::*;
+use std::{fs::OpenOptions, io::Write};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -59,10 +59,7 @@ fn main() {
         }
     }
     // Verification in parser ensures events and scheduler are not empty
-    let mut kernel = Kernel::new(
-        enabled_events.unwrap(),
-        scheduler.unwrap(),
-    );
+    let mut kernel = Kernel::new(enabled_events.unwrap(), scheduler.unwrap());
     println!("Kernel Model Created!");
     kernel.print_config();
 
@@ -75,6 +72,9 @@ fn main() {
         std::io::stdin().read_line(&mut event).unwrap();
         if let Err(e) = kernel.execute(event.trim()) {
             println!("Error: {:?}", e);
+            if e == Error::NoReadyTask {
+                kernel.shutdown(0).unwrap();
+            }
         }
     }
 

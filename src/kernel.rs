@@ -76,7 +76,7 @@ impl Kernel {
     // Built-in operations
 
     /// Turn off the kernel model
-    fn shutdown(&mut self, code: i32) -> Result<(), Error> {
+    pub fn shutdown(&mut self, code: i32) -> Result<(), Error> {
         self.shutdown_code = Some(code);
         Ok(())
     }
